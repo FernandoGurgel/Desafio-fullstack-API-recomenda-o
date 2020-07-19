@@ -1,4 +1,90 @@
-import Mongoose, { Schema } from 'mongoose'
+import Mongoose, { Schema, Document } from 'mongoose'
+
+interface IProduct extends Document {
+  imagesSsl: []
+  skus: [
+    {
+      sku: string
+      specs: []
+      properties: {
+        name: string
+        installment: {
+          count: string
+          price: string
+        }
+        images: {
+          imagem1: string
+          default: string
+        }
+        price: string
+        url: string
+        details: {
+          precoavista: string
+        }
+        status: string
+        oldPrice: string
+      }
+      customBusiness: []
+    },
+  ]
+  apiKey: string
+  description: string
+  type: string
+  auditInfo: {
+    updatedBy: string
+    updatedThrough: string
+  }
+  specs: []
+  eanCode: []
+  price: string
+  details: {
+    name: string
+    brand: string
+    rating: string
+    cod_venda: string
+    precoavista: string
+  }
+  remoteUrl: []
+  categories: [
+    {
+      id: string
+      name: string
+      parents: []
+    },
+  ]
+  id: {
+    type: string
+    unique: true
+    required: true
+  }
+  stock: []
+  brand: string
+  customBusiness: []
+  basePrice: []
+  images: {
+    imagem1: string
+    default: string
+  }
+  kitProducts: []
+  created: string
+  oldPrice: string
+  published: []
+  version: string
+  url: string
+  tags: []
+  unit: []
+  installment: {
+    count: number
+    price: number
+  }
+  name: string
+  clientLastUpdated: string
+  extraInfo: {
+    hash: string
+  }
+  status: string
+  ungroupedId: string
+}
 
 const ProductSchemas = new Schema({
   imagesSsl: Object,
@@ -86,4 +172,4 @@ const ProductSchemas = new Schema({
   ungroupedId: String,
 })
 
-export default Mongoose.model('product', ProductSchemas)
+export default Mongoose.model<IProduct>('product', ProductSchemas)

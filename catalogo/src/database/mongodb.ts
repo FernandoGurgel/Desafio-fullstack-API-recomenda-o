@@ -19,11 +19,10 @@ class MongoConfig {
         user: process.env.MONGODB_USER,
         pass: process.env.MONGODB_PASSWORD,
       })
-      .then(async (res) => {
-        console.log('Connected to MongoDB.')
-        console.log(res)
-        // const response = new ImportScrpit()
-        // await response.execute()
+      .then(async () => {
+        console.log('☘️Connected to MongoDB.')
+        const response = new ImportScrpit()
+        await response.execute()
       })
       .catch((error) => {
         console.log(error)

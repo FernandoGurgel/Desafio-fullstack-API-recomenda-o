@@ -7,7 +7,7 @@ interface ProductDTO {
 }
 
 class ProductServices {
-  public async exceute({ id, format }: ProductDTO): Promise<void> {
+  public async exceute({ id, format }: ProductDTO): Promise<string | null> {
     const resultRedis = await redisClient.get(id)
     if (!resultRedis) {
       console.log('Not found on redis')
@@ -19,48 +19,38 @@ class ProductServices {
           'EX',
           60,
         )
-        if (format === 'complete') {
-          return (
-            id:resultMongo[0]._id
+        if (format === 'compact') {
+          const result = JSON.stringify({
+            id: resultMongo[0]._id,
             name: resultMongo[0].name,
             price: resultMongo[0].price,
             status: resultMongo[0].status,
-            categories: resultMongo[0].categories)
+            categories: resultMongo[0].categories,
+          })
+          return result
+        } else {
+          const result = JSON.stringify(resultMongo[0])
+          return result
         }
       } else {
         throw new Error('There is no product with the given id')
       }
-
-      console.log(resultMongo)
-      //   function (err, product) {
-      //   console.log('Querying MongoDB instead')
-      //   if (err) res.end(JSON.stringify(err))
-      //   else if (product.length > 0) {
-      //     redisClient.set(product[0].id, JSON.stringify(product[0]), 'EX', 60)
-
-      //     if (req.query.searchType === 'compact')
-      //       res.end(
-      //         JSON.stringify({
-      //           name: product[0].name,
-      //           price: product[0].price,
-      //           status: product[0].status,
-      //           categories: product[0].categories,
-      //         }),
-      //       )
-      //     else if (req.query.searchType === 'complete')
-      //       res.end(JSON.stringify(product[0]))
-      //   } else
-      //     res.end(
-      //       JSON.stringify({
-      //         status: 400,
-      //         message: 'There is no product with the given id',
-      //       }),
-      //     )
-      // })
     } else {
+      console.log('Product found on Redis of Catalog API')
+      const product = JSON.parse(resultRedis)
+      if (format === 'compact') {
+        const result = JSON.stringify({
+          name: product.name,
+          price: product.price,
+          status: product.status,
+          categories: product.categories,
+        })
+        return result
+      } else {
+        const result = JSON.stringify(product)
+        return result
+      }
     }
-
-    // console.log(id)
   }
 }
 export default ProductServices

@@ -4,14 +4,18 @@ import ProductServices from '../services/productServices'
 
 const productsRoutes = Router()
 
-productsRoutes.get('/:id/:format', async (request, response) => {
-  const { id, format } = request.params
+productsRoutes.get('/:id', async (request, response) => {
+  const { id } = request.params
+  const format = request.query.format
   const productServices = new ProductServices()
   const products = await productServices.exceute({
     id,
-    format: format || 'compact',
+    format: format?.toString() || 'compact',
   })
-  return response.json(products)
+  if (products) {
+    const result = JSON.parse(products)
+    return response.json(result)
+  }
 })
 
 export default productsRoutes
