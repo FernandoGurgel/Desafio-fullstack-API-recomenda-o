@@ -2,7 +2,7 @@ version: "2"
 services:
   mongo_catalog:
     image: mongo:3.4.2
-    container_name: mongo_linx
+    container_name: mongo_catalog
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=suasenha
@@ -15,9 +15,42 @@ services:
     command: redis-server --requirepass suasenha
     ports:
       - "6379:6379"
+      
   redis_recommendation:
     image: "redis:alpine"
-    container_name: redis_rec
+    container_name: redis_recommendation
     command: redis-server --requirepass suasenha --port 6380
     ports:
       - "6380:6380"
+
+  api_catalog:
+    image: fagurgel/api-catalog
+    container_name: api_catalog
+    environment: 
+      - "NODE_ENV=production"
+      - "MONGODB_USER=root"
+      - "MONGODB_PASSWORD=suasenha"
+      - "MONGODB_HOST=mongo_catalog"
+      - "MONGODB_DBNAME=catalog"
+      - "REDIS_PORT=6379"
+      - "REDIS_HOST=redis_catalog"
+      - "REDIS_PASSWORD=suasenha"
+    ports: 
+      - "3000:3000"
+    links: 
+      - "mongo_catalog"
+      - "redis_catalog"
+  
+  api_recommendation:
+    image: fagurgel/api-recomendacao
+    container_name: api_recommendation
+    environment:
+      - "NODE_ENV=production"
+      - "CATALOG_API_URL=http://api_catalog:3000/products"
+      - "RANKING_API_URL=https://wishlist.neemu.com/onsite/impulse-core/ranking"
+      - "REDIS_HOST=redis_recommendation"
+    ports: 
+      - "4000:4000"
+    links: 
+      - "api_catalog"
+      - "redis_recommendation"

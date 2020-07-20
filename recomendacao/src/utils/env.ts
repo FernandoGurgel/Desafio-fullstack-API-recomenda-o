@@ -1,5 +1,12 @@
 import { resolve } from 'path'
 
-import { config } from 'dotenv'
+import * as dotenv from "dotenv";
 
-config({ path: resolve(__dirname, '../../.env') })
+dotenv.config();
+console.log(process.env.NODE_ENV)
+if(process.env.NODE_ENV =='development'){
+    dotenv.config({ path: resolve(__dirname, '../../.env') })
+}
+else{
+  dotenv.config();
+}

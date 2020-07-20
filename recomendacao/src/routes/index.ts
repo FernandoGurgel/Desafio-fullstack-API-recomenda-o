@@ -1,8 +1,8 @@
 import { Router } from 'express'
-import ProductsRoute from './commendations.routes'
+import ProductsRoute from './recommendations.routes'
 
 const routes = Router()
 
-routes.use('/commendations', ProductsRoute)
+routes.use('/recommendations', ProductsRoute)
 
 export default routes
