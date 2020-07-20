@@ -3,6 +3,6 @@ import ProductsRoute from './Products.routes'
 
 const routes = Router()
 
-routes.use('/', ProductsRoute)
+routes.use('/products', ProductsRoute)
 
 export default routes
