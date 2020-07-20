@@ -11,17 +11,18 @@ class ProductServices {
     const resultRedis = await redisClient.get(id)
     if (!resultRedis) {
       console.log('Not found on redis')
-      const resultMongo = await ProductModel.find({ _id: id })
+      console.log(id)
+      const resultMongo = await ProductModel.find({ id })
       if (resultMongo) {
         redisClient.set(
-          resultMongo[0]._id,
+          resultMongo[0].id.toString(),
           JSON.stringify(resultMongo[0]),
           'EX',
           60,
         )
         if (format === 'compact') {
           const result = JSON.stringify({
-            id: resultMongo[0]._id,
+            id: resultMongo[0].id,
             name: resultMongo[0].name,
             price: resultMongo[0].price,
             status: resultMongo[0].status,

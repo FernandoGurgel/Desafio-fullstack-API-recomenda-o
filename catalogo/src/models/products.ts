@@ -52,11 +52,7 @@ interface IProduct extends Document {
       parents: []
     },
   ]
-  id: {
-    type: string
-    unique: true
-    required: true
-  }
+  id:number,
   stock: []
   brand: string
   customBusiness: []

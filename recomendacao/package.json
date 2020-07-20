@@ -1,19 +1,45 @@
 {
-  "name": "recommendation_api",
+  "name": "recomendacao",
   "version": "1.0.0",
-  "description": "An api to get list of recommended products informations",
+  "description": "API de recomendação para e-commerce",
+  "main": "index.js",
+  "repository": "http://github.com:FernandoGurgel/Desafio-fullstack-API-recomendacao",
   "author": "Fernando Gurgel",
   "license": "MIT",
-  "main": "index.js",
   "scripts": {
-    "start":"node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "tsc": "tsc",
+    "dev:server": "ts-node-dev --inspect  --ignore-watch node_modules src/server.ts",
+    "buid": ""
   },
   "dependencies": {
-    "async": "^3.1.1",
+    "axios": "^0.19.2",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "ioredis": "^4.14.1",
-    "request": "^2.88.0"
+    "ioredis": "^4.17.3",
+    "mongoose": "^5.9.25",
+    "mongose": "^0.0.2-security"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/cors": "^2.8.6",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.7",
+    "@types/ioredis": "^4.17.2",
+    "@types/mongoose": "^5.7.32",
+    "@typescript-eslint/eslint-plugin": "^3.6.1",
+    "@typescript-eslint/parser": "^3.6.1",
+    "eslint": "^6.2.2",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "prettier": "^2.0.5",
+    "ts-node-dev": "^1.0.0-pre.50",
+    "typescript": "^3.9.7"
   }
 }
